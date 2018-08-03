@@ -1,12 +1,16 @@
 body {
   margin: 0;
   padding: 0;
+  background-image: url("./assets/background-image.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: right;
 }
 
 #fixed{
   position: fixed;
   width: 100%;
-  background: white;
+  background: #F4F6F7;
 }
 
 #navigationBar{
@@ -29,8 +33,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #F4F6F7;
-  padding-top: 12%;
+  /* background-color: #F4F6F7; */
+  padding-top: 13%;
 }
 
 #favoriteButton:hover{
