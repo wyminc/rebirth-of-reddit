@@ -59,6 +59,14 @@ body {
   background: rgba(255, 217, 0, 0.603);
 }
 
+#randomButton:hover{
+  background: rgba(255, 217, 0, 0.603);
+}
+
+#appButton:hover{
+  background: rgba(255, 217, 0, 0.603);
+}
+
 .postAuthor:hover{
   border: 2px solid darkgray;
 }
