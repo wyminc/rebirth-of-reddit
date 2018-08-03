@@ -7,6 +7,12 @@ body {
   background-position: right;
 }
 
+#fixed{
+  position: fixed;
+  width: 100%;
+  background: #F4F6F7;
+}
+
 #headerStuff{
   display: flex;
   flex-direction: row;
@@ -23,13 +29,18 @@ body {
   font-family: 'Oswald', sans-serif;
   font-size: 250%;
   margin: 0;
+  flex-direction: column;
 }
 
-#fixed{
-  position: fixed;
-  width: 100%;
-  background: #F4F6F7;
+#currentSub{
+  display: flex;
+  font-family: 'Oswald', sans-serif;
+  font-size: 50%;
+  margin: 0;
+  align-self: flex-end;
 }
+
+
 
 #navigationBar{
   display: flex;
@@ -51,20 +62,22 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-color: #F4F6F7; */
-  padding-top: 14%;
+  padding-top: 15%;
 }
 
 #favoriteButton:hover{
   background: rgba(255, 217, 0, 0.603);
+  cursor: pointer;
 }
 
 #randomButton:hover{
   background: rgba(255, 217, 0, 0.603);
+  cursor: pointer;
 }
 
 #appButton:hover{
   background: rgba(255, 217, 0, 0.603);
+  cursor: pointer;
 }
 
 .postAuthor:hover{
@@ -104,4 +117,8 @@ body {
   font-weight: lighter;
   font-family: 'Quicksand', sans-serif;
   background-color: white;
+}
+
+#logo:hover{
+  cursor: pointer;
 }

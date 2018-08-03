@@ -9,6 +9,12 @@ request("GET", "load", "https://www.reddit.com/r/gifrecipes.json", res => {
   console.log(JSON.parse(res.currentTarget.response));
   let resAPI = JSON.parse(res.currentTarget.response);
 
+  let createSub = document.createElement("h2");
+  let getTitle = document.getElementById("title");
+  createSub.id = "currentSub";
+  getTitle.appendChild(createSub);
+  createSub.innerHTML = "PEPE TELLS YOU TO SEE : " + resAPI.data.children[0].data.subreddit;
+
   for (var i = 0; i < resAPI.data.children.length; i++) {
     let shorterAPI = resAPI.data.children[i].data;
 
@@ -18,11 +24,6 @@ request("GET", "load", "https://www.reddit.com/r/gifrecipes.json", res => {
       myAuthor.className = "postAuthor";
       document.getElementById("posts").appendChild(myAuthor);
       myAuthor.innerHTML = "Posted by u/" + shorterAPI.author;
-      // myAuthor.addEventListener("mouseover", lightUp);
-
-      // lightup = () => {
-      //   this.style.border = "thick solid darkgrey";
-      // }
 
       const myTitle = document.createElement("div");
       myTitle.id = "title" + i;
@@ -86,9 +87,6 @@ request("GET", "load", "https://www.reddit.com/r/gifrecipes.json", res => {
       myDivs.innerHTML = htmlDecode(shorterAPI.selftext_html);
     }
   }
-
-
-
   //Loads next page data
   request("GET", "load", ("http://www.reddit.com/r/gifrecipes.json?after=" + resAPI.data.after), res => {
 
@@ -190,6 +188,9 @@ function favorite() {
 
     let resAPI = JSON.parse(res.currentTarget.response);
 
+    let getSub = document.getElementById("currentSub");
+    getSub.innerHTML = "Pepe wants you to see: " + resAPI.data.children[0].data.subreddit;
+
     for (var i = 0; i < resAPI.data.children.length; i++) {
       let shorterAPI = resAPI.data.children[i].data;
 
@@ -199,11 +200,6 @@ function favorite() {
         myAuthor.className = "postAuthor";
         document.getElementById("posts").appendChild(myAuthor);
         myAuthor.innerHTML = "Posted by u/" + shorterAPI.author;
-        // myAuthor.addEventListener("mouseover", lightUp);
-
-        // lightup = () => {
-        //   this.style.border = "thick solid darkgrey";
-        // }
 
         const myTitle = document.createElement("div");
         myTitle.id = "title" + i;
@@ -354,8 +350,16 @@ function favorite() {
   })
 }
 
+//Code for App Button to work
+document.getElementById("appButton").addEventListener("click", app);
 
-var urlArr = ["https://www.reddit.com/r/earthporn.json", "https://www.reddit.com/r/cozyplaces.json", "https://www.reddit.com/r/roomporn.json"]
+function app() {
+  window.open("https://www.reddit.com/mobile/download");
+};
+
+
+//Array to house the links for our random button to pull from
+var urlArr = ["https://www.reddit.com/r/earthporn.json", "https://www.reddit.com/r/showerthoughts.json", "https://www.reddit.com/r/roomporn.json", "https://www.reddit.com/r/meirl.json", "https://www.reddit.com/r/getmotivated.json", "https://www.reddit.com/r/art.json"]
 
 
 document.getElementById("randomButton").addEventListener("click", random);
@@ -367,7 +371,7 @@ function random() {
   let randomArr = urlArr[randomNum];
 
   request("GET", "load", randomArr, res => {
-    console.log(JSON.parse(res.currentTarget.response), "favorite");
+    console.log(JSON.parse(res.currentTarget.response), "random");
     let getBody = document.body;
     let getPost = document.getElementById("posts");
     getBody.removeChild(getPost);
@@ -378,6 +382,9 @@ function random() {
 
     let resAPI = JSON.parse(res.currentTarget.response);
 
+    let getSub = document.getElementById("currentSub");
+    getSub.innerHTML = "Pepe wants you to see: " + resAPI.data.children[0].data.subreddit;
+
     for (var i = 0; i < resAPI.data.children.length; i++) {
       let shorterAPI = resAPI.data.children[i].data;
 
@@ -387,11 +394,6 @@ function random() {
         myAuthor.className = "postAuthor";
         document.getElementById("posts").appendChild(myAuthor);
         myAuthor.innerHTML = "Posted by u/" + shorterAPI.author;
-        // myAuthor.addEventListener("mouseover", lightUp);
-
-        // lightup = () => {
-        //   this.style.border = "thick solid darkgrey";
-        // }
 
         const myTitle = document.createElement("div");
         myTitle.id = "title" + i;
@@ -406,13 +408,13 @@ function random() {
             myVid.className = "redditPost";
             myTitle.appendChild(myVid);
             myVid.src = shorterAPI.url.slice(0, (shorterAPI.url.length - 1));
-          } else if (shorterAPI.crosspost_parent_list != null) {
-            const myVid = document.createElement("embed");
-            myVid.id = "post" + i;
-            myVid.className = "redditPost";
-            myTitle.appendChild(myVid);
-            myVid.src = shorterAPI.crosspost_parent_list[0].secure_media.oembed.thumbnail_url;
-          } else if (shorterAPI.preview.images != null) {
+            // } else if (shorterAPI.crosspost_parent_list !== undefined) {
+            //   const myVid = document.createElement("embed");
+            //   myVid.id = "post" + i;
+            //   myVid.className = "redditPost";
+            //   myTitle.appendChild(myVid);
+            //   myVid.src = shorterAPI.crosspost_parent_list[0].secure_media.oembed.thumbnail_url;
+          } else if (shorterAPI.preview !== undefined) {
             const myVid = document.createElement("img");
             myVid.id = "post" + i;
             myVid.className = "redditPost";
@@ -461,16 +463,105 @@ function random() {
         myDivs.innerHTML = htmlDecode(shorterAPI.selftext_html);
       }
     }
+    //Loads next page data
+    request("GET", "load", ("http://www.reddit.com/r/gifrecipes.json?after=" + resAPI.data.after), res => {
+
+      console.log(JSON.parse(res.currentTarget.response), "random 2nd");
+      let resAPI = JSON.parse(res.currentTarget.response);
+
+      for (var i = 0; i < resAPI.data.children.length; i++) {
+        let shorterAPI = resAPI.data.children[i].data;
+
+        if (resAPI.data.children[i].data.selftext === "") {
+          const myAuthor = document.createElement("div");
+          myAuthor.id = "author" + i;
+          myAuthor.className = "postAuthor";
+          document.getElementById("posts").appendChild(myAuthor);
+          myAuthor.innerHTML = "Posted by u/" + shorterAPI.author;
+          // myAuthor.addEventListener("mouseover", lightUp);
+
+          // lightup = () => {
+          //   this.style.border = "thick solid darkgrey";
+          // }
+
+          const myTitle = document.createElement("div");
+          myTitle.id = "title" + i;
+          myTitle.className = "postTitle";
+          myAuthor.appendChild(myTitle);
+          myTitle.innerHTML = shorterAPI.title;
+
+          if (shorterAPI.secure_media === null) {
+            if (shorterAPI.url.substring(shorterAPI.url.length - 1) === "v") {
+              const myVid = document.createElement("img");
+              myVid.id = "post" + i;
+              myVid.className = "redditPost";
+              myTitle.appendChild(myVid);
+              myVid.src = shorterAPI.url.slice(0, (shorterAPI.url.length - 1));
+            } else if (shorterAPI.crosspost_parent_list != null) {
+              const myVid = document.createElement("embed");
+              myVid.id = "post" + i;
+              myVid.className = "redditPost";
+              myTitle.appendChild(myVid);
+              myVid.src = shorterAPI.crosspost_parent_list[0].secure_media.oembed.thumbnail_url;
+            } else {
+              const myVid = document.createElement("img");
+              myVid.id = "post" + i;
+              myVid.className = "redditPost";
+              myTitle.appendChild(myVid);
+              myVid.src = shorterAPI.url;
+            }
+          } else {
+            const myVid = document.createElement("img");
+            myVid.id = "post" + i;
+            myVid.className = "redditPost";
+            myTitle.appendChild(myVid);
+            myVid.src = shorterAPI.secure_media.oembed.thumbnail_url;
+          }
+
+        } else {
+          const myAuthor = document.createElement("div");
+          myAuthor.id = "author" + i;
+          myAuthor.className = "postAuthor";
+          document.getElementById("posts").appendChild(myAuthor);
+          myAuthor.innerHTML = "Posted by u/" + shorterAPI.author;
+
+          const myTitle = document.createElement("div");
+          myTitle.id = "title" + i;
+          myTitle.className = "postTitle";
+          myAuthor.appendChild(myTitle);
+          myTitle.innerHTML = shorterAPI.title;
+
+          const myDivs = document.createElement("div");
+          myDivs.id = "post" + i;
+          myDivs.className = "redditPost";
+          myTitle.appendChild(myDivs);
+
+          //Domparser I found on stackoverflow that parses HTML code so I can preserve the string properties
+          //https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript/34064434#34064434
+          function htmlDecode(input) {
+            var doc = new DOMParser().parseFromString(input, "text/html");
+            return doc.documentElement.textContent;
+          };
+
+          myDivs.innerHTML = htmlDecode(shorterAPI.selftext_html);
+        }
+      }
+    })
   })
 
 }
 
 
-document.getElementById("appButton").addEventListener("click", app);
+//Bonus
+let pepeArr = ["https://www.youtube.com/watch?v=7JyDJzawiU8", "https://www.youtube.com/watch?v=qTksCYUgI7s"]
 
-function app() {
-  window.open("https://www.reddit.com/mobile/download");
+document.getElementById("logo").addEventListener("click", pepe);
+
+function pepe() {
+  let randomNum = Math.floor(Math.random() * pepeArr.length);
+  let randomArr = pepeArr[randomNum];
+
+  window.open(randomArr);
 };
-
 
 
