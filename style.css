@@ -52,11 +52,11 @@ body {
   justify-content: center;
   align-items: center;
   /* background-color: #F4F6F7; */
-  padding-top: 13%;
+  padding-top: 14%;
 }
 
 #favoriteButton:hover{
-  background: red;
+  background: rgba(255, 217, 0, 0.603);
 }
 
 .postAuthor:hover{
