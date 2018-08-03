@@ -7,6 +7,24 @@ body {
   background-position: right;
 }
 
+#headerStuff{
+  display: flex;
+  flex-direction: row;
+}
+
+#logo {
+  width: 10%;
+  height: 10%;
+}
+
+#title {
+  display: flex;
+  align-self: flex-end;
+  font-family: 'Oswald', sans-serif;
+  font-size: 250%;
+  margin: 0;
+}
+
 #fixed{
   position: fixed;
   width: 100%;
