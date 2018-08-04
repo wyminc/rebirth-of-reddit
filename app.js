@@ -17,7 +17,7 @@ request("GET", "load", "https://www.reddit.com/r/gifrecipes.json", res => {
   let getTitle = document.getElementById("title");
   createSub.id = "currentSub";
   getTitle.appendChild(createSub);
-  createSub.innerHTML = "PEPE TELLS YOU TO SEE : " + resAPI.data.children[0].data.subreddit;
+  createSub.innerHTML = "PEPE TELLS YOU TO LOOK AT : " + resAPI.data.children[0].data.subreddit;
 
   //For loop that will create post according to how many posts are on that subreddit's first page
   //The if conditions in here are mainly just looking for alternative links that will work on load because certain ones do not work and meet CORB issues
