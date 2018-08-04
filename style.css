@@ -40,15 +40,12 @@ body {
   align-self: flex-end;
 }
 
-
-
 #navigationBar{
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   background: #FFEC00;
   width: 100%;
-
 }
 
 .navButtons {
