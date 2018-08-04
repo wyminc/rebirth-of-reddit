@@ -562,11 +562,10 @@ function random() {
 
 
 //Bonus
-let pepeArr = ["https://www.youtube.com/watch?v=7JyDJzawiU8", "https://www.youtube.com/watch?v=qTksCYUgI7s"]
-
 document.getElementById("logo").addEventListener("click", pepe);
 
 function pepe() {
+  let pepeArr = ["https://www.youtube.com/watch?v=7JyDJzawiU8", "https://www.youtube.com/watch?v=qTksCYUgI7s"]
   let randomNum = Math.floor(Math.random() * pepeArr.length);
   let randomArr = pepeArr[randomNum];
 
